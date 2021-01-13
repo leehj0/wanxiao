@@ -21,12 +21,13 @@ def main():
         msg = strTime + "打卡成功"
     else:
         msg = strTime + "打卡异常"
-    title = userInfo['username'] + msg
-    print(title)
+    result = json.dumps(response.json(), sort_keys=True, indent=4, separators=(',', ': '), ensure_ascii=False)
+    print(msg + result)
     print("-----------------------")
+    title = userInfo['username'] + msg
     try:
         print('主用户开始微信推送...')
-        wechatPush(title,sckey,response)
+        wechatPush(title,sckey,result)
     except:
         print("微信推送出错！")
 
@@ -143,7 +144,7 @@ def getUserJson(areaStr,userInfo,token,phone,phone2,name):
 def getUserInfo(token):
     token={'token':token}
     sign_url = "https://reportedh5.17wanxiao.com/api/clock/school/getUserInfo"
-    #提交打卡
+    #获取用户信息
     response = requests.post(sign_url, data=token)
     return response.json()['userInfo']
 
@@ -156,21 +157,13 @@ def checkIn(areaStr,userInfo,token,phone,phone2,name):
     return response
 
 #微信通知
-def wechatPush(title,sckey,response):
-    one = requests.get('https://api.qinor.cn/soup/').text
-    result = json.dumps(response.json(), sort_keys=True, indent=4, separators=(',', ': '), ensure_ascii=False)
-    content = (
-    "------\n"
-    "返回信息：" + result + "\n\n"
-    "------\n"
-    "#### 今日一句:" + one + '\n\n')
+def wechatPush(title,sckey):
     data = {
             "text":title,
-            "desp":content
+            "desp":"详情见运行日志：https://github.com/"
     }
-    scurl= sckey
     try:
-        req = requests.post(scurl,data)
+        req = requests.post(sckey,data)
         if req.json()["errmsg"] == 'success':
             print("Server酱推送服务成功")
         else:
