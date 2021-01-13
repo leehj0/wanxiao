@@ -23,11 +23,12 @@ def main():
         msg = strTime + "打卡异常"
     result = json.dumps(response.json(), sort_keys=True, indent=4, separators=(',', ': '), ensure_ascii=False)
     print(msg + result)
+    print(response.json())
     print("-----------------------")
     title = userInfo['username'] + msg
     try:
         print('主用户开始微信推送...')
-        wechatPush(title,sckey,result)
+        wechatPush(title,sckey)
     except:
         print("微信推送出错！")
 
