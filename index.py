@@ -21,11 +21,10 @@ def main():
         msg = strTime + "打卡成功"
     else:
         msg = strTime + "打卡异常"
-    result = json.dumps(response.json(), sort_keys=True, indent=4, separators=(',', ': '), ensure_ascii=False)
-    print(msg + result)
+    print(msg)
     print(response.json())
     print("-----------------------")
-    title = userInfo['username'] + msg
+    title = userInfo['username'] + msg + response.json()["msg"]
     try:
         print('主用户开始微信推送...')
         wechatPush(title,sckey)
