@@ -161,7 +161,7 @@ def checkIn(areaStr,userInfo,token,phone,phone2,name):
 def wechatPush(title,sckey):
     data = {
             "text":title,
-            "desp":"详情见运行日志：https://github.com/"
+            "desp":"详情见GitHub运行日志：https://github.com/"
     }
     try:
         req = requests.post(sckey,data)
