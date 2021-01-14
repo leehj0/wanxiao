@@ -6,8 +6,9 @@ def main():
     #sectets字段录入
     phone = input()
     password = input()
-    areaStr = input()
     sckey = input()
+    areaStr = input()
+    
 
     #提交打卡
     campus = CampusCard(phone, password)
