@@ -6,8 +6,6 @@ def main():
     #sectets字段录入
     phone = input()
     password = input()
-    phone2 = input()
-    name = input()
     areaStr = input()
     sckey = input()
 
@@ -15,7 +13,7 @@ def main():
     campus = CampusCard(phone, password)
     token = campus.user_info["sessionId"]
     userInfo = getUserInfo(token)
-    response = checkIn(areaStr,userInfo,token,phone,phone2,name)
+    response = checkIn(areaStr,userInfo,token,phone)
     strTime = getNowTime()
     if response.json()["msg"] == '成功':
         msg = strTime + "打卡成功"
@@ -39,10 +37,8 @@ def getNowTime():
     return strTime
 
 #打卡参数配置函数
-def getUserJson(areaStr,userInfo,token,phone,phone2,name):
-    #随机温度(36.2~36.7)
-    a=random.uniform(36.2,36.7)
-    temperature = round(a, 1)
+def getUserJson(areaStr,userInfo,token,phone):
+    temperature = 36.4
     json = {
         "businessType": "epmpics",
         "method": "submitUpInfo",
@@ -63,23 +59,27 @@ def getUserJson(areaStr,userInfo,token,phone,phone2,name):
         "userid": userInfo['userId'],
         "updatainfo": [
             {
+                "propertyname": "isGoWarningAdress",
+                "value": "低"
+            }, 
+            {
+                "propertyname": "isis",
+                "value": "无异动"
+            },
+            {
                 "propertyname": "temperature",
-                "value": temperature
+                "value": "36.5"
             },
             {
                 "propertyname": "symptom",
                 "value": "无症状"
             },
             {
-                "propertyname": "isConfirmed",
+                "propertyname": "isIsolation",
                 "value": "否"
             },
             {
-                "propertyname": "isdefinde",
-                "value": "否.未隔离"
-            },
-            {
-                "propertyname": "isTouch",
+                "propertyname": "isConfirmed",
                 "value": "否"
             },
             {
@@ -87,56 +87,19 @@ def getUserJson(areaStr,userInfo,token,phone,phone2,name):
                 "value": "否"
             },
             {
-                "propertyname": "是否途径或逗留过疫情中，高风险地区？",
-                "value": "否"
-            },
-            {
-                "propertyname": "isFFHasSymptom",
-                "value": "没有"
-            },
-            {
-                "propertyname": "isContactFriendIn14",
-                "value": "没有"
-            },
-            {
-                "propertyname": "xinqing",
-                "value": "健康"
-            },
-            {
-                "propertyname": "bodyzk",
-                "value": "是"
-            },
-            {
                 "propertyname": "cxjh",
                 "value": "否"
             },
             {
-                "propertyname": "isleaveaddress",
+                "propertyname": "isAlreadyInSchool",
                 "value": "否"
             },
             {
-                "propertyname": "isAlreadyInSchool",
-                "value": "没有"
-            },
-            {
                 "propertyname": "ownPhone",
-                "value": phone
-            },
-            {
-                "propertyname": "emergencyContact",
-                "value": name
-            },
-            {
-                "propertyname": "mergencyPeoplePhone",
-                "value": phone2
-            },
-            {
-                "propertyname": "assistRemark",
-                "value": "无"
+                "value": ""
             }
         ],
-        "customerAppTypeRuleId": 146,
-        "clockState": 0,
+        "gpsType": 1,
         "token": token
         },
     }
@@ -150,9 +113,9 @@ def getUserInfo(token):
     return response.json()['userInfo']
 
 #打卡提交函数
-def checkIn(areaStr,userInfo,token,phone,phone2,name):
+def checkIn(areaStr,userInfo,token,phone):
     sign_url = "https://reportedh5.17wanxiao.com/sass/api/epmpics"
-    jsons=getUserJson(areaStr,userInfo,token,phone,phone2,name)
+    jsons=getUserJson(areaStr,userInfo,token,phone)
     #提交打卡
     response = requests.post(sign_url, json=jsons)
     return response
