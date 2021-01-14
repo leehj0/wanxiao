@@ -24,7 +24,8 @@ def main():
     print(msg)
     print(response.json())
     print("-----------------------")
-    title = userInfo['username'] + msg + response.json()["data"]
+    ff = str(response.json()["data"])
+    title = userInfo['username'] + msg + ff
     try:
         print('主用户开始微信推送...')
         wechatPush(title,sckey)
