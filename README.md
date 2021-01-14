@@ -3,7 +3,7 @@
 **完美校园健康打卡**
 
 - 随机温度(36.2℃-36.7℃)🌡
-- 打卡时间5点40分左右
+- 打卡时间6点30分左右
 
 - 项目仅供学习研究，为了疫情防控，大家还是要早起打卡哦
 
@@ -81,6 +81,6 @@ cron就是脚本运行时间，22对应的时间是世界标准时UTC，在时�
 
 ## 代码参考及详细教程
 
-https://github.com/ReaJason/17wanxiaoCheckin-Actions
+[17wanxiaoCheckin-Actions](https://github.com/ReaJason/17wanxiaoCheckin-Actions)
 
-https://github.com/YooKing/HAUT_autoCheck/
+[HAUT_autoCheck](https://github.com/YooKing/HAUT_autoCheck/)
